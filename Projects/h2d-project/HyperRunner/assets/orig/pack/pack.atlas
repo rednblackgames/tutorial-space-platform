@@ -1,0 +1,153 @@
+
+pack.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Diamond
+  rotate: false
+  xy: 387, 723
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+GemCounter
+  rotate: false
+  xy: 327, 647
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+dig-machine-back
+  rotate: false
+  xy: 1, 1163
+  size: 384, 720
+  orig: 384, 720
+  offset: 0, 0
+  index: -1
+elevator
+  rotate: false
+  xy: 1, 681
+  size: 384, 480
+  orig: 384, 480
+  offset: 0, 0
+  index: -1
+elevator-grinder
+  rotate: false
+  xy: 387, 919
+  size: 576, 192
+  orig: 576, 192
+  offset: 0, 0
+  index: -1
+elevator-grinder-cross
+  rotate: false
+  xy: 387, 1499
+  size: 576, 384
+  orig: 576, 384
+  offset: 0, 0
+  index: -1
+elevator-rope
+  rotate: false
+  xy: 1, 583
+  size: 324, 96
+  orig: 324, 96
+  offset: 0, 0
+  index: -1
+grinder-platform
+  rotate: false
+  xy: 387, 821
+  size: 576, 96
+  orig: 576, 96
+  offset: 0, 0
+  index: -1
+platform-tile-1
+  rotate: false
+  xy: 965, 919
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+platform-tile-2
+  rotate: false
+  xy: 1543, 1305
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+platform-tile-3
+  rotate: false
+  xy: 1737, 1691
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+platform-tile-4
+  rotate: false
+  xy: 1, 389
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+platform-tile-5
+  rotate: false
+  xy: 1159, 919
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+platform-tile-6
+  rotate: false
+  xy: 1737, 1497
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+platform-tile-7
+  rotate: false
+  xy: 1, 195
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+platform-tile-8
+  rotate: false
+  xy: 1, 1
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+platform-tile-9
+  rotate: false
+  xy: 1543, 1111
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 965, 1113
+  size: 576, 384
+  orig: 576, 384
+  offset: 0, 0
+  index: -1
+wall-light-1
+  rotate: false
+  xy: 965, 1499
+  size: 576, 384
+  orig: 576, 384
+  offset: 0, 0
+  index: -1
+wall-light-2
+  rotate: false
+  xy: 387, 1113
+  size: 576, 384
+  orig: 576, 384
+  offset: 0, 0
+  index: -1
+walll-border
+  rotate: false
+  xy: 1543, 1499
+  size: 192, 384
+  orig: 192, 384
+  offset: 0, 0
+  index: -1
