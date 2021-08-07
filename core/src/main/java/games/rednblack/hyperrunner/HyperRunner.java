@@ -76,7 +76,7 @@ public class HyperRunner extends ApplicationAdapter {
         mSceneLoader.addComponentByTagName("diamond", DiamondComponent.class);
 
         mHUDViewport = new ExtendViewport(768, 576);
-        mHUD = new HUD(mAssetManager.get("skin/skin.json"), mAsyncResourceManager.getMainPack(), mHUDViewport, mSceneLoader.getBatch());
+        mHUD = new HUD(mAssetManager.get("skin/skin.json"), mAsyncResourceManager.getTextureAtlas("main"), mHUDViewport, mSceneLoader.getBatch());
         mHUD.setPlayerScript(playerScript);
 
         InputAdapter webGlfullscreen = new InputAdapter() {

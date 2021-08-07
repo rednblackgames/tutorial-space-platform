@@ -17,6 +17,7 @@
 	<!-- Remove the "user.agent" lines above if you encounter issues with Safari or other Gecko browsers. -->
 
 	<extend-configuration-property name="gdx.reflect.include" value="games.rednblack.hyperrunner.component" />
+	<extend-configuration-property name="gdx.reflect.include" value="java.util.HashSet" />
 
 	<extend-configuration-property name="gdx.reflect.exclude" value="com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap" />
 	<extend-configuration-property name="gdx.reflect.exclude" value="com.badlogic.gdx.graphics.g3d.environment.DirectionalLight" />
