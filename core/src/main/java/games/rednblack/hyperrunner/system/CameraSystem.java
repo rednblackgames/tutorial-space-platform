@@ -1,22 +1,23 @@
 package games.rednblack.hyperrunner.system;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.ComponentMapper;
+import com.artemis.annotations.All;
+import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Camera;
 
 import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.ViewPortComponent;
-import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
+@All(ViewPortComponent.class)
 public class CameraSystem extends IteratingSystem {
 
-    private Entity focus;
+    protected ComponentMapper<TransformComponent> transformMapper;
+    protected ComponentMapper<ViewPortComponent> viewportMapper;
+
+    private int focus = -1;
     private final float xMin, xMax, yMin, yMax;
 
     public CameraSystem(float xMin, float xMax, float yMin, float yMax) {
-        super(Family.all(ViewPortComponent.class).get());
-
         this.xMin = xMin;
         this.xMax = xMax;
         this.yMin = yMin;
@@ -24,12 +25,12 @@ public class CameraSystem extends IteratingSystem {
     }
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        ViewPortComponent viewPortComponent = ComponentRetriever.get(entity, ViewPortComponent.class);
+    protected void process(int entity) {
+        ViewPortComponent viewPortComponent = viewportMapper.get(entity);
         Camera camera = viewPortComponent.viewPort.getCamera();
 
-        if (focus != null) {
-            TransformComponent transformComponent = ComponentRetriever.get(focus, TransformComponent.class);
+        if (focus != -1) {
+            TransformComponent transformComponent = transformMapper.get(focus);
 
             if (transformComponent != null) {
 
@@ -41,7 +42,7 @@ public class CameraSystem extends IteratingSystem {
         }
     }
 
-    public void setFocus(Entity focus) {
+    public void setFocus(int focus) {
         this.focus = focus;
     }
 }

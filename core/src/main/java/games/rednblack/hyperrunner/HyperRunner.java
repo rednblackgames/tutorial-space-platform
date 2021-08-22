@@ -1,6 +1,5 @@
 package games.rednblack.hyperrunner;
 
-import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -14,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import games.rednblack.editor.renderer.SceneConfiguration;
 import games.rednblack.editor.renderer.SceneLoader;
 import games.rednblack.editor.renderer.resources.AsyncResourceManager;
 import games.rednblack.editor.renderer.resources.ResourceManagerLoader;
@@ -37,7 +37,7 @@ public class HyperRunner extends ApplicationAdapter {
     private Viewport mViewport;
     private OrthographicCamera mCamera;
 
-    private PooledEngine mEngine;
+    private com.artemis.World mEngine;
 
     private HUD mHUD;
     private ExtendViewport mHUDViewport;
@@ -52,11 +52,14 @@ public class HyperRunner extends ApplicationAdapter {
         mAssetManager.finishLoading();
 
         mAsyncResourceManager = mAssetManager.get("project.dt", AsyncResourceManager.class);
-        mSceneLoader = new SceneLoader(mAsyncResourceManager);
-        mEngine = mSceneLoader.getEngine();
+        SceneConfiguration config = new SceneConfiguration();
+        config.setResourceRetriever(mAsyncResourceManager);
         CameraSystem cameraSystem = new CameraSystem(5, 40, 5, 6);
-        mEngine.addSystem(new PlayerAnimationSystem());
-        mEngine.addSystem(cameraSystem);
+        config.addSystem(cameraSystem);
+        config.addSystem(new PlayerAnimationSystem());
+        mSceneLoader = new SceneLoader(config);
+        mEngine = mSceneLoader.getEngine();
+
         ComponentRetriever.addMapper(PlayerComponent.class);
         ComponentRetriever.addMapper(DiamondComponent.class);
 
@@ -65,12 +68,12 @@ public class HyperRunner extends ApplicationAdapter {
 
         mSceneLoader.loadScene("MainScene", mViewport);
 
-        ItemWrapper root = new ItemWrapper(mSceneLoader.getRoot());
+        ItemWrapper root = new ItemWrapper(mSceneLoader.getRoot(), mEngine);
 
         ItemWrapper player = root.getChild("player");
-        player.getChild("player-anim").getEntity().add(mEngine.createComponent(PlayerComponent.class));
-        PlayerScript playerScript = new PlayerScript(mEngine);
-        player.addScript(playerScript, mEngine);
+        ComponentRetriever.create(player.getChild("player-anim").getEntity(), PlayerComponent.class, mEngine);
+        PlayerScript playerScript = new PlayerScript();
+        player.addScript(playerScript);
         cameraSystem.setFocus(player.getEntity());
 
         mSceneLoader.addComponentByTagName("diamond", DiamondComponent.class);
@@ -103,13 +106,11 @@ public class HyperRunner extends ApplicationAdapter {
 
     @Override
     public void render() {
-        mCamera.update();
-
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         mViewport.apply();
-        mEngine.update(Gdx.graphics.getDeltaTime());
+        mEngine.process();
 
         mHUD.act(Gdx.graphics.getDeltaTime());
         mHUDViewport.apply();

@@ -1,8 +1,8 @@
 package games.rednblack.hyperrunner.component;
 
-import games.rednblack.editor.renderer.components.BaseComponent;
+import com.artemis.PooledComponent;
 
-public class DiamondComponent implements BaseComponent {
+public class DiamondComponent extends PooledComponent {
 
     public int value = 1;
 

@@ -1,7 +1,6 @@
 package games.rednblack.hyperrunner.script;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.artemis.ComponentMapper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
@@ -15,37 +14,38 @@ import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
 import games.rednblack.editor.renderer.physics.PhysicsContact;
 import games.rednblack.editor.renderer.scripts.BasicScript;
-import games.rednblack.editor.renderer.utils.ComponentRetriever;
 import games.rednblack.editor.renderer.utils.ItemWrapper;
 import games.rednblack.hyperrunner.component.DiamondComponent;
 import games.rednblack.hyperrunner.component.PlayerComponent;
 
 public class PlayerScript extends BasicScript implements PhysicsContact {
 
+    protected com.artemis.World mEngine;
+    protected ComponentMapper<PhysicsBodyComponent> physicsMapper;
+    protected ComponentMapper<TransformComponent> transformMapper;
+    protected ComponentMapper<PlayerComponent> playerMapper;
+    protected ComponentMapper<MainItemComponent> mainItemMapper;
+    protected ComponentMapper<DiamondComponent> diamondMapper;
+    protected ComponentMapper<DimensionsComponent> dimensionsMapper;
+
     public static final int LEFT = 1;
     public static final int RIGHT = -1;
     public static final int JUMP = 0;
 
-    private Entity animEntity;
+    private int animEntity;
     private PhysicsBodyComponent mPhysicsBodyComponent;
 
     private final Vector2 impulse = new Vector2(0, 0);
     private final Vector2 speed = new Vector2(0, 0);
 
-    private final PooledEngine mEngine;
-
-    public PlayerScript(PooledEngine engine) {
-        mEngine = engine;
-    }
-
     @Override
-    public void init(Entity item) {
+    public void init(int item) {
         super.init(item);
 
-        ItemWrapper itemWrapper = new ItemWrapper(item);
+        ItemWrapper itemWrapper = new ItemWrapper(item, mEngine);
         animEntity = itemWrapper.getChild("player-anim").getEntity();
 
-        mPhysicsBodyComponent = ComponentRetriever.get(item, PhysicsBodyComponent.class);
+        mPhysicsBodyComponent = physicsMapper.get(item);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PlayerScript extends BasicScript implements PhysicsContact {
                 impulse.set(5, speed.y);
                 break;
             case JUMP:
-                TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+                TransformComponent transformComponent = transformMapper.get(entity);
                 impulse.set(speed.x, transformComponent.y < 6 ? 5 : speed.y);
                 break;
         }
@@ -85,7 +85,7 @@ public class PlayerScript extends BasicScript implements PhysicsContact {
     }
 
     public PlayerComponent getPlayerComponent() {
-        return ComponentRetriever.get(animEntity, PlayerComponent.class);
+        return playerMapper.get(animEntity);
     }
 
     @Override
@@ -94,37 +94,37 @@ public class PlayerScript extends BasicScript implements PhysicsContact {
     }
 
     @Override
-    public void beginContact(Entity contactEntity, Fixture contactFixture, Fixture ownFixture, Contact contact) {
-        MainItemComponent mainItemComponent = ComponentRetriever.get(contactEntity, MainItemComponent.class);
+    public void beginContact(int contactEntity, Fixture contactFixture, Fixture ownFixture, Contact contact) {
+        MainItemComponent mainItemComponent = mainItemMapper.get(contactEntity);
 
-        PlayerComponent playerComponent = ComponentRetriever.get(animEntity, PlayerComponent.class);
+        PlayerComponent playerComponent = playerMapper.get(animEntity);
 
         if (mainItemComponent.tags.contains("platform"))
             playerComponent.touchedPlatforms++;
 
-        DiamondComponent diamondComponent = ComponentRetriever.get(contactEntity, DiamondComponent.class);
+        DiamondComponent diamondComponent = diamondMapper.get(contactEntity);
         if (diamondComponent != null) {
             playerComponent.diamondsCollected += diamondComponent.value;
-            mEngine.removeEntity(contactEntity);
+            mEngine.delete(contactEntity);
         }
     }
 
     @Override
-    public void endContact(Entity contactEntity, Fixture contactFixture, Fixture ownFixture, Contact contact) {
-        MainItemComponent mainItemComponent = ComponentRetriever.get(contactEntity, MainItemComponent.class);
+    public void endContact(int contactEntity, Fixture contactFixture, Fixture ownFixture, Contact contact) {
+        MainItemComponent mainItemComponent = mainItemMapper.get(contactEntity);
 
-        PlayerComponent playerComponent = ComponentRetriever.get(animEntity, PlayerComponent.class);
+        PlayerComponent playerComponent = playerMapper.get(animEntity);
 
         if (mainItemComponent.tags.contains("platform"))
             playerComponent.touchedPlatforms--;
     }
 
     @Override
-    public void preSolve(Entity contactEntity, Fixture contactFixture, Fixture ownFixture, Contact contact) {
-        TransformComponent transformComponent = ComponentRetriever.get(this.entity, TransformComponent.class);
+    public void preSolve(int contactEntity, Fixture contactFixture, Fixture ownFixture, Contact contact) {
+        TransformComponent transformComponent = transformMapper.get(this.entity);
 
-        TransformComponent colliderTransform = ComponentRetriever.get(contactEntity, TransformComponent.class);
-        DimensionsComponent colliderDimension = ComponentRetriever.get(contactEntity, DimensionsComponent.class);
+        TransformComponent colliderTransform = transformMapper.get(contactEntity);
+        DimensionsComponent colliderDimension = dimensionsMapper.get(contactEntity);
 
         if (transformComponent.y < colliderTransform.y + colliderDimension.height) {
             contact.setFriction(0);
@@ -134,7 +134,7 @@ public class PlayerScript extends BasicScript implements PhysicsContact {
     }
 
     @Override
-    public void postSolve(Entity contactEntity, Fixture contactFixture, Fixture ownFixture, Contact contact) {
+    public void postSolve(int contactEntity, Fixture contactFixture, Fixture ownFixture, Contact contact) {
 
     }
 }
