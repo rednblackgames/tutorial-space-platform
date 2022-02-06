@@ -1,8 +1,8 @@
 package games.rednblack.hyperrunner.component;
 
-import games.rednblack.editor.renderer.components.BaseComponent;
+import com.artemis.PooledComponent;
 
-public class PlayerComponent implements BaseComponent {
+public class PlayerComponent extends PooledComponent {
 
     public int touchedPlatforms = 0;
 

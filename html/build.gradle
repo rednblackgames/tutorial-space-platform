@@ -35,14 +35,14 @@ dependencies {
 	implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
 	implementation "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion"
 	implementation "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
-	implementation "com.badlogicgames.ashley:ashley:$ashleyVersion:sources"
+	implementation "net.onedaybeard.artemis:artemis-odb:$artemisVersion:sources"
+	implementation "net.onedaybeard.artemis:artemis-odb-gwt:$artemisVersion"
+	implementation "net.onedaybeard.artemis:artemis-odb-gwt:$artemisVersion:sources"
 
 	implementation "games.rednblack.hyperlap2d:runtime-libgdx:$h2dVersion:sources"
 	implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$freefontTypeGwtVersion"
 	implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$freefontTypeGwtVersion:sources"
 	implementation "com.github.tommyettinger:regexodus:$regExodusVersion:sources"
-	implementation "com.rafaskoberg.gdx:typing-label:$typingLabelVersion:sources"
-
 }
 
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask

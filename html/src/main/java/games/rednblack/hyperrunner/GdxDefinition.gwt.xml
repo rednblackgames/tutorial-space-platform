@@ -4,7 +4,6 @@
 	<source path="" />
 	<inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
 
-	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.ashley" />
 	<inherits name="HyperLap2D" />
 
 	<inherits name="games.rednblack.hyperrunner.HyperRunner" />
@@ -16,8 +15,11 @@
 	<collapse-property name="user.agent" values="*" />
 	<!-- Remove the "user.agent" lines above if you encounter issues with Safari or other Gecko browsers. -->
 
+	<extend-configuration-property name="gdx.reflect.include" value="games.rednblack.hyperrunner.script" />
 	<extend-configuration-property name="gdx.reflect.include" value="games.rednblack.hyperrunner.component" />
-	<extend-configuration-property name="gdx.reflect.include" value="java.util.HashSet" />
+	<extend-configuration-property name="artemis.reflect.include" value="games.rednblack.hyperrunner.system" />
+	<extend-configuration-property name="artemis.reflect.include" value="games.rednblack.hyperrunner.component" />
+	<extend-configuration-property name="artemis.reflect.include" value="games.rednblack.hyperrunner.script" />
 
 	<extend-configuration-property name="gdx.reflect.exclude" value="com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap" />
 	<extend-configuration-property name="gdx.reflect.exclude" value="com.badlogic.gdx.graphics.g3d.environment.DirectionalLight" />
