@@ -113,7 +113,6 @@ public class HyperRunner extends ApplicationAdapter {
         mEngine.process();
 
         mHUD.act(Gdx.graphics.getDeltaTime());
-        mHUDViewport.apply();
         mHUD.draw();
     }
 
