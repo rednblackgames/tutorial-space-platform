@@ -14,4 +14,9 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
 		initialize(new HyperRunner(), configuration);
 	}
+
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 }

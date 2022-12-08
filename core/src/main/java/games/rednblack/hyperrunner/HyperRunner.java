@@ -128,5 +128,6 @@ public class HyperRunner extends ApplicationAdapter {
     @Override
     public void dispose() {
         mAssetManager.dispose();
+        mSceneLoader.dispose();
     }
 }
