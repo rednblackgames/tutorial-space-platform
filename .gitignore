@@ -30,6 +30,7 @@ gwt-unitCache/
 www-test/
 .gwt-tmp/
 *.symbolMap
+teavm/build/
 
 ## IntelliJ, Android Studio:
 .idea/

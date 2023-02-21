@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        maven { url "https://teavm.org/maven/repository/" }
+    }
+    dependencies {
+        classpath 'org.gretty:gretty:3.1.0'
+    }
+}
+
+plugins {
+    id 'org.gretty' version '3.1.0'
+}
+
+gretty {
+    contextPath = '/'
+    extraResourceBase 'build/dist/webapp'
+}
+
+sourceSets.main.java.srcDirs = ["src/main/java/"]
+project.ext.mainClassName = "games.rednblack.hyperrunner.teavm.Build"
+
+dependencies {
+    implementation project(":core")
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+    implementation "com.github.xpenatan.gdx-teavm:backend-teavm:$gdxTeaVMVersion"
+    // Box2D extension
+    implementation "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion"
+    // FreeType extension
+    implementation "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:$gdxTeaVMVersion"
+}
+
+task buildJavaScript(dependsOn: classes, type: JavaExec) {
+    setGroup("teavm")
+    setDescription("Build demo")
+    mainClass.set(project.mainClassName)
+    setClasspath(sourceSets.main.runtimeClasspath)
+}
+
+task runTeaVMDemo(dependsOn: [':teavm:buildJavaScript', ':teavm:jettyRun']) {
+    setGroup("teavm")
+    setDescription("Run Demo")
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11

@@ -30,10 +30,12 @@ subprojects {
 	version = '0.0.1'
 	ext.appName = 'HyperRunner'
 	repositories {
+		maven { url "https://teavm.org/maven/repository/" }
 		mavenLocal()
 		mavenCentral()
 		gradlePluginPortal()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		maven { url "https://oss.sonatype.org/content/repositories/releases/" }
 		maven { url 'https://jitpack.io' }
 	}
 }
