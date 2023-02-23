@@ -216,5 +216,5 @@ configure(uwp) {
     description = "Generate the UWP project and open Visual Studio"
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
