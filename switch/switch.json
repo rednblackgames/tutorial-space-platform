@@ -33,7 +33,7 @@
         "java.util.HashSet"
     ],
     "useStackTraces": true,
-    "useLineNumbers": true,
-    "useValueChecks": true,
+    "useLineNumbers": false,
+    "useValueChecks": false,
     "useStackCookies": true
 }
