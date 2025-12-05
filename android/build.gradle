@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 
 
 android {
-	compileSdkVersion 29
+	compileSdkVersion 35
+	namespace 'games.rednblack.hyperrunner'
 	sourceSets {
 		main {
 			manifest.srcFile 'AndroidManifest.xml'
@@ -31,15 +32,15 @@ android {
 	}
 	defaultConfig {
 		applicationId 'games.rednblack.hyperrunner'
-		minSdkVersion 19
-		targetSdkVersion 29
+		minSdkVersion 23
+		targetSdkVersion 35
 		versionCode 1
 		versionName "1.0"
 		multiDexEnabled true
 	}
 	compileOptions {
-		sourceCompatibility "8.0"
-		targetCompatibility "8.0"
+		sourceCompatibility "11"
+		targetCompatibility "11"
 		coreLibraryDesugaringEnabled true
 	}
 	

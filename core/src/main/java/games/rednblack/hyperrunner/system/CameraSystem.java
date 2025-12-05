@@ -18,7 +18,8 @@ public class CameraSystem extends IteratingSystem {
     private int focus = -1;
     private final float xMin, xMax, yMin, yMax;
 
-    private Vector3 mVector3 = new Vector3();
+    private final Vector3 mVector3 = new Vector3();
+    private static final float cameraSpeed = 5.0f;
 
     public CameraSystem(float xMin, float xMax, float yMin, float yMax) {
         this.xMin = xMin;
@@ -36,14 +37,16 @@ public class CameraSystem extends IteratingSystem {
             TransformComponent transformComponent = transformMapper.get(focus);
 
             if (transformComponent != null) {
-
                 float x = Math.max(xMin, Math.min(xMax, transformComponent.x));
                 float y = Math.max(yMin, Math.min(yMax, transformComponent.y + 2));
 
-                //camera.position.set(x, y, 0);
+                mVector3.set(x, y, camera.position.z);
 
-                mVector3.set(x, y, 0);
-                camera.position.lerp(mVector3, 0.1f);
+                float dt = world.getDelta();
+                float alpha = 1.0f - (float) Math.exp(-cameraSpeed * dt);
+                if (alpha > 1.0f) alpha = 1.0f;
+
+                camera.position.lerp(mVector3, alpha);
             }
         }
     }

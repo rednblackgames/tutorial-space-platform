@@ -11,10 +11,11 @@ import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
 import games.rednblack.editor.renderer.components.sprite.SpriteAnimationComponent;
 import games.rednblack.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import games.rednblack.editor.renderer.systems.strategy.LogicSystem;
 import games.rednblack.hyperrunner.component.PlayerComponent;
 
 @All(PlayerComponent.class)
-public class PlayerAnimationSystem extends IteratingSystem {
+public class PlayerAnimationSystem extends IteratingSystem implements LogicSystem {
 
     protected ComponentMapper<ParentNodeComponent> parentMapper;
     protected ComponentMapper<PhysicsBodyComponent> physicsMapper;

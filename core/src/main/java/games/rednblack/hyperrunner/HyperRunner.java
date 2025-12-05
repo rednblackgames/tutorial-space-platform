@@ -7,16 +7,21 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import games.rednblack.editor.renderer.SceneConfiguration;
 import games.rednblack.editor.renderer.SceneLoader;
 import games.rednblack.editor.renderer.resources.AsyncResourceManager;
 import games.rednblack.editor.renderer.resources.ResourceManagerLoader;
+import games.rednblack.editor.renderer.systems.PhysicsSystem;
 import games.rednblack.editor.renderer.utils.ComponentRetriever;
 import games.rednblack.editor.renderer.utils.ItemWrapper;
 import games.rednblack.hyperrunner.component.DiamondComponent;
@@ -42,8 +47,15 @@ public class HyperRunner extends ApplicationAdapter {
     private HUD mHUD;
     private ExtendViewport mHUDViewport;
 
+    private ShapeRenderer shapeRenderer;
+
+    private ScreenViewport screenViewport;
+
     @Override
     public void create() {
+        shapeRenderer = new ShapeRenderer();
+        screenViewport = new ScreenViewport();
+
         mAssetManager = new AssetManager();
         mAssetManager.setLoader(AsyncResourceManager.class, new ResourceManagerLoader(mAssetManager.getFileHandleResolver()));
         mAssetManager.load("project.dt", AsyncResourceManager.class);
@@ -103,7 +115,6 @@ public class HyperRunner extends ApplicationAdapter {
         Gdx.input.setInputProcessor(new InputMultiplexer(webGlfullscreen, mHUD));
     }
 
-
     @Override
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -114,6 +125,42 @@ public class HyperRunner extends ApplicationAdapter {
 
         mHUD.act(Gdx.graphics.getDeltaTime());
         mHUD.draw();
+
+        //renderDebugGraph(shapeRenderer);
+    }
+
+    float[] history = new float[300]; // Storico ultimi 300 frame
+    int index = 0;
+
+    public void renderDebugGraph(ShapeRenderer shapeRenderer) {
+        // Registra il tempo del frame corrente (in millisecondi)
+        float frameTime = Gdx.graphics.getDeltaTime() * 1000f;
+
+        history[index++] = frameTime;
+        if (index >= history.length) index = 0;
+
+        shapeRenderer.setProjectionMatrix(mHUDViewport.getCamera().combined); // O usa una matrix UI fissa
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.GREEN);
+
+        float x = 10;
+        for (int i = 0; i < history.length - 1; i++) {
+            int idx = (index + i) % history.length;
+            int nextIdx = (index + i + 1) % history.length;
+
+            // Scala: 1 pixel verticale = 1 millisecondo.
+            // La linea rossa è il target dei 16.6ms (60fps)
+            float y1 = history[idx] * 5;
+            float y2 = history[nextIdx] * 5;
+
+            shapeRenderer.line(x + i * 2, y1, x + (i + 1) * 2, y2);
+        }
+
+        // Linea di riferimento 16ms (60 FPS)
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.line(10, 16.6f * 5, 10 + history.length * 2, 16.6f * 5);
+
+        shapeRenderer.end();
     }
 
     @Override
