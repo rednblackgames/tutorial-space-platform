@@ -11,17 +11,14 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import games.rednblack.editor.renderer.components.DimensionsComponent;
 import games.rednblack.editor.renderer.components.MainItemComponent;
 import games.rednblack.editor.renderer.components.TransformComponent;
-import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
-import games.rednblack.editor.renderer.physics.PhysicsContact;
-import games.rednblack.editor.renderer.scripts.BasicScript;
+import games.rednblack.editor.renderer.scripts.PhysicsBodyScript;
 import games.rednblack.editor.renderer.utils.ItemWrapper;
 import games.rednblack.hyperrunner.component.DiamondComponent;
 import games.rednblack.hyperrunner.component.PlayerComponent;
 
-public class PlayerScript extends BasicScript implements PhysicsContact {
+public class PlayerScript extends PhysicsBodyScript {
 
     protected com.artemis.World mEngine;
-    protected ComponentMapper<PhysicsBodyComponent> physicsMapper;
     protected ComponentMapper<TransformComponent> transformMapper;
     protected ComponentMapper<PlayerComponent> playerMapper;
     protected ComponentMapper<MainItemComponent> mainItemMapper;
@@ -33,7 +30,6 @@ public class PlayerScript extends BasicScript implements PhysicsContact {
     public static final int JUMP = 0;
 
     private int animEntity;
-    private PhysicsBodyComponent mPhysicsBodyComponent;
 
     private final Vector2 impulse = new Vector2(0, 0);
     private final Vector2 speed = new Vector2(0, 0);
@@ -44,8 +40,6 @@ public class PlayerScript extends BasicScript implements PhysicsContact {
 
         ItemWrapper itemWrapper = new ItemWrapper(item, mEngine);
         animEntity = itemWrapper.getChild("player-anim").getEntity();
-
-        mPhysicsBodyComponent = physicsMapper.get(item);
     }
 
     @Override
@@ -64,7 +58,7 @@ public class PlayerScript extends BasicScript implements PhysicsContact {
     }
 
     public void movePlayer(int direction) {
-        Body body = mPhysicsBodyComponent.body;
+        Body body = physicsBodyComponent.body;
 
         speed.set(body.getLinearVelocity());
 

@@ -12,6 +12,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
+		configuration.useGL30 = true;
 		initialize(new HyperRunner(), configuration);
 	}
 
