@@ -8,6 +8,7 @@ import com.github.xpenatan.gdx.backends.teavm.config.plugins.TeaReflectionSuppli
 import java.io.File;
 import java.io.IOException;
 import org.teavm.tooling.TeaVMTool;
+import org.teavm.vm.TeaVMOptimizationLevel;
 
 public class Build {
 
@@ -15,21 +16,11 @@ public class Build {
         TeaBuildConfiguration teaBuildConfiguration = new TeaBuildConfiguration();
         teaBuildConfiguration.assetsPath.add(new AssetFileHandle(".." + File.separatorChar + "assets"));
         teaBuildConfiguration.webappPath = new File("build" + File.separatorChar + "dist").getCanonicalPath();
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.h2d.extension.spine");
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.h2d.extension.talos");
-        TeaReflectionSupplier.addReflectionClass("com.talosvfx.talos.runtime");
 
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.hyperrunner.component");
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.hyperrunner.system");
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.hyperrunner.script");
+        //libGDX
+        TeaReflectionSupplier.addReflectionClass("com.badlogic.gdx.math.Vector2");
 
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.data");
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.components");
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.SceneLoader");
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.systems");
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.box2dLight.LightData");
-        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.factory");
-
+        //Artemis
         TeaReflectionSupplier.addReflectionClass("com.artemis.BaseSystem");
         TeaReflectionSupplier.addReflectionClass("com.artemis.utils.BitVector");
         TeaReflectionSupplier.addReflectionClass("com.artemis.utils.Bag");
@@ -44,9 +35,29 @@ public class Build {
         TeaReflectionSupplier.addReflectionClass("com.artemis.Aspect");
         TeaReflectionSupplier.addReflectionClass("com.artemis.Entity");
 
+        //HyperLap2D Runtime
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.data");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.components");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.SceneLoader");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.systems");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.box2dLight.LightData");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.factory");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.editor.renderer.scripts.PhysicsBodyScript");
+
+        //HyperLap2D Extensions
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.h2d.extension.spine");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.h2d.extension.talos");
+        TeaReflectionSupplier.addReflectionClass("com.talosvfx.talos.runtime");
+
+        //Game
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.hyperrunner.component");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.hyperrunner.system");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.hyperrunner.script");
+
         TeaBuilder.config(teaBuildConfiguration);
         TeaVMTool tool = new TeaVMTool();
-        tool.setObfuscated(false);
+        tool.setOptimizationLevel(TeaVMOptimizationLevel.FULL);
+        tool.setObfuscated(true);
         tool.setMainClass(TeaVMLauncher.class.getName());
         TeaBuilder.build(tool, false);
     }
