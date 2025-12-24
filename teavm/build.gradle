@@ -17,7 +17,7 @@ gretty {
     extraResourceBase 'build/dist/webapp'
 }
 
-sourceSets.main.java.srcDirs = ["src/main/java/"]
+sourceSets.main.java.srcDirs = ["emu", "src/main/java/"]
 project.ext.mainClassName = "games.rednblack.hyperrunner.teavm.Build"
 
 dependencies {

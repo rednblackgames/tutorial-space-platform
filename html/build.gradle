@@ -38,6 +38,7 @@ dependencies {
 	implementation "net.onedaybeard.artemis:artemis-odb:$artemisVersion:sources"
 	implementation "net.onedaybeard.artemis:artemis-odb-gwt:$artemisVersion"
 	implementation "net.onedaybeard.artemis:artemis-odb-gwt:$artemisVersion:sources"
+	implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 
 	implementation "games.rednblack.hyperlap2d:runtime-libgdx:$h2dVersion:sources"
 	implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$freefontTypeGwtVersion"
