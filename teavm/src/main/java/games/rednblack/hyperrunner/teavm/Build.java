@@ -47,7 +47,8 @@ public class Build {
         //HyperLap2D Extensions
         TeaReflectionSupplier.addReflectionClass("games.rednblack.h2d.extension.spine");
         TeaReflectionSupplier.addReflectionClass("games.rednblack.h2d.extension.talos");
-        TeaReflectionSupplier.addReflectionClass("com.talosvfx.talos.runtime");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.talos.runtime.serialization");
+        TeaReflectionSupplier.addReflectionClass("games.rednblack.talos.runtime.modules");
 
         //Game
         TeaReflectionSupplier.addReflectionClass("games.rednblack.hyperrunner.component");
