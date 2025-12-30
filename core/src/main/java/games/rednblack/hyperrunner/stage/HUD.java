@@ -99,7 +99,7 @@ public class HUD extends Stage {
         if (rightClicked)
             mPlayerScript.movePlayer(PlayerScript.RIGHT);
 
-        if (diamonds != mPlayerScript.getPlayerComponent().diamondsCollected) {
+        if (mPlayerScript.getPlayerComponent() != null && diamonds != mPlayerScript.getPlayerComponent().diamondsCollected) {
             diamonds = mPlayerScript.getPlayerComponent().diamondsCollected;
             mDiamondsLabel.setText("x" + diamonds);
         }
